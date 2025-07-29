@@ -32,17 +32,17 @@ def read_full():
     cursor.execute('SELECT * FROM results')
     return cursor.fetchall()
 
-st.sidebar.title('seting')
-seting = st.sidebar.selectbox('diagrees', ('BMI','Delete from history','Delete all history','Search by ID','Make Table','About Us'))
+st.sidebar.title('setting')
+setting = st.sidebar.selectbox('diagrees', ('BMI','Delete from history','Delete all history','Search by ID','Make Table','About Us'))
 
-if seting == 'BMI':
+if setting == 'BMI':
     st.title('Welcom to your Website')
     st.write("Let's check your BMI")
     
     weight = st.number_input("Enter your weight (kg):", min_value = 1.0, max_value = 550.0, step = 0.1)
     height = st.number_input("Enter your height (m):", min_value = 0.5, max_value = 2.5, step = 0.01)
     
-    if weight and height:
+    if st.button('calculate'):
         col1, col2 = st.columns(2)
         bmi = weight / pow(height, 2)
 
@@ -63,14 +63,13 @@ if seting == 'BMI':
 
         col2.metric(f'body form', f'{body}')
         st.write(idea)
+        insert(str(weight), height, bmi, body, idea)
+        if insert:
+            st.info('Information inserted to the database')
+        else:
+            st.error("ERROR: information didn't insert to the database")
 
-        st.title('would you like to insert it to database?')
-        x = st.button('yes')
-        if x:
-            insert(str(weight), height, bmi, body, idea)
-            st.success('insert the table')
-
-if seting == 'Delete from history':
+if setting == 'Delete from history':
     st.title('Delete by ID')
 
     id = st.number_input("Enter ID:", min_value=1, step=1)
@@ -83,13 +82,13 @@ if seting == 'Delete from history':
         else:
             st.error(f'No record found with ID {id}')
 
-if seting == 'Delete all history':
+if setting == 'Delete all history':
     st.title("Delete All History")
     if st.button("Confirm deletion"):
         delete_all()
         st.success("All records cleared")
 
-if seting == 'Search by ID':
+if setting == 'Search by ID':
     id = st.number_input('Enter id :', step = 1, min_value = 1)
     if st.button('search'):
         results = read_where1(id)
@@ -98,7 +97,7 @@ if seting == 'Search by ID':
         else:
             st.info("No records found")
             
-if seting == 'Make Table':
+if setting == 'Make Table':
     st.title("All BMI Records")
     data = read_full()
     if data:
@@ -106,7 +105,7 @@ if seting == 'Make Table':
     else:
         st.info("No records in database")
 
-if seting == 'About Us':
+if setting == 'About Us':
     st.title('About This Project')
     st.write("This Streamlit project, developed by Iliya, calculates and tracks your BMI. Store your results, view history, and manage records easily.")
     st.title('Contact Us')
