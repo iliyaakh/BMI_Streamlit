@@ -69,7 +69,7 @@ if setting == 'BMI':
         else:
             st.error("ERROR: information didn't insert to the database")
 
-if setting == 'Delete from history':
+elif setting == 'Delete from history':
     st.title('Delete by ID')
 
     id = st.number_input("Enter ID:", min_value=1, step=1)
@@ -82,13 +82,13 @@ if setting == 'Delete from history':
         else:
             st.error(f'No record found with ID {id}')
 
-if setting == 'Delete all history':
+elif setting == 'Delete all history':
     st.title("Delete All History")
     if st.button("Confirm deletion"):
         delete_all()
         st.success("All records cleared")
 
-if setting == 'Search by ID':
+elif setting == 'Search by ID':
     id = st.number_input('Enter id :', step = 1, min_value = 1)
     if st.button('search'):
         results = read_where1(id)
@@ -97,7 +97,7 @@ if setting == 'Search by ID':
         else:
             st.info("No records found")
             
-if setting == 'Make Table':
+elif setting == 'Make Table':
     st.title("All BMI Records")
     data = read_full()
     if data:
@@ -105,12 +105,17 @@ if setting == 'Make Table':
     else:
         st.info("No records in database")
 
-if setting == 'About Us':
+elif setting == 'About Us':
     st.title('About This Project')
     st.write("This Streamlit project, developed by Iliya, calculates and tracks your BMI. Store your results, view history, and manage records easily.")
     st.title('Contact Us')
-    st.write('You can contact us via:')
-    st.link_button('Telegram', 'https://t.me/iliya_12344')
-    st.link_button('Instagram', 'https://www.instagram.com/iliyakh177?igsh=dXpkNHM2OTl6OHho')
-    if st.button('Email'):
-        st.write('iliyakh660@gmail.com')
+    st.write('you can contact us via :')
+    col1 , col2 , col3 = st.columns(3)
+    with col1 : 
+        st.write('Telegram : @iliya_12344')
+        st.link_button('Go to Telegram', 'https://t.me/iliya_12344')
+    with col2 :
+        st.write('Instagram : @iliyakh177')
+        st.link_button('Go to Instagram', 'https://www.instagram.com/iliyakh177?igsh=dXpkNHM2OTl6OHho')
+    with col3 :
+        st.write('Email : iliyakh660@gmail.com')
